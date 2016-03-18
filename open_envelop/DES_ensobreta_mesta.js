@@ -159,14 +159,16 @@ app.controller("des_sobreCtrl", function($scope ) {
 
 			console.log("BEGIN >>>>>>>>>>>>> #");
 
+
+
 			console.log(" password #" + $scope.password);
+
+
 
 			console.log(" #region Decode input certificate ");
             var asn1 = org.pkijs.fromBER(certArrayBuffer);
             var cert_simpl = new org.pkijs.simpl.CERT({ schema: asn1.result });
-
             console.log(cert_simpl);
-
             console.log(" #endregion ");
 
 
@@ -180,14 +182,39 @@ app.controller("des_sobreCtrl", function($scope ) {
 
 
 
+			// this region is for JSRSASIGN ONLY
+			// LLAVE PRIVADA
+			var pkcs8PEM = "" +
+			"-----BEGIN ENCRYPTED PRIVATE KEY-----\r\n" +
+			$('#key_b64').val() 
+			"-----END ENCRYPTED PRIVATE KEY-----\r\n";
+
+			var h = PKCS5PKEY.getKeyFromEncryptedPKCS8PEM(pkcs8PEM, $scope.password) ;
+
+			console.log(h);
+
+			$('#keyInfo').html( " <span style='color:green;'> KEY INFO </span> "
+				+ " <br/> Type: <span style='color:red;'>" + h.type + "</span>"
+				+ " <br/> Type: <span style='color:red;'>" + h + "</span>"
+				+ " <br/> is private key?: <span style='color:red;'>" + h.isPrivate + "</span>");
+			// END JSRSASIGN
+
+
+
+
+
             console.log(" #region Decode CMS Enveloped content ");
             var encodedCMSEnveloped = $("#el_pinche_envelop").val();
             var clearEncodedCMSEnveloped = encodedCMSEnveloped.replace(/(-----(BEGIN|END)( NEW)? CMS-----|\n)/g, '');
+
+            console.log(clearEncodedCMSEnveloped);
+
             var cmsEnvelopedBuffer = stringToArrayBuffer(window.atob(clearEncodedCMSEnveloped));
             var asn1 = org.pkijs.fromBER(cmsEnvelopedBuffer);
             var cms_content_simpl = new org.pkijs.simpl.CMS_CONTENT_INFO({ schema: asn1.result });
             var cms_enveloped_simp = new org.pkijs.simpl.CMS_ENVELOPED_DATA({ schema: cms_content_simpl.content });
             console.log(" #endregion ");
+
 
 
             cms_enveloped_simp.decrypt(0,

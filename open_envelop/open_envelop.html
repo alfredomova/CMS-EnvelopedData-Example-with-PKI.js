@@ -8,6 +8,9 @@
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.12.2.min.js"></script>
 		<link rel="stylesheet" type="text/css" media="screen" href="http://getbootstrap.com/dist/css/bootstrap.min.css"></link>
 		
+		<script type="text/javascript" src="DES_ensobreta_mesta.js"></script>
+
+		<!-- PKI.JS -->
 	    <script type="text/javascript" src="https://pkijs.org/examples/org/pkijs/common.js"></script>
 	    <script type="text/javascript" src="https://pkijs.org/examples/org/pkijs/asn1.js"></script>
 	    <script type="text/javascript" src="https://pkijs.org/examples/org/pkijs/x509_schema.js"></script>
@@ -17,8 +20,9 @@
 	    <script type="text/javascript" src="https://pkijs.org/examples/org/pkijs/ocsp_tsp_schema.js"></script>
 	    <script type="text/javascript" src="https://pkijs.org/examples/org/pkijs/ocsp_tsp_simpl.js"></script>
 
-		<script type="text/javascript" src="DES_ensobreta_mesta.js"></script>
-		
+		<!-- jsrsasign -->
+		<script type="text/javascript" src="http://kjur.github.io/jsrsasign/jsrsasign-latest-all-min.js"></script>
+
 	</head>
 	<body ng-controller="des_sobreCtrl">
 
@@ -60,6 +64,9 @@
 				<br />
 				<b>Key B64:</b> <br />
 				<textarea rows="5" cols="150" readonly id="key_b64"></textarea> 
+
+				<div id="keyInfo"></div>
+
 
 				<br />
 				<b>File B64: *ESTE ES TU ARCHIVO ORIGINAL* </b> <br />
